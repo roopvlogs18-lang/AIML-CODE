@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyO9XWStO3f5xCz8X5OrwaO5",
+      "authorship_tag": "ABX9TyN9ApkvdmZHycMfFuTJ1rjm",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,13 +28,13 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 3,
+      "execution_count": 5,
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
         "id": "Rs_5Q0UgDEiV",
-        "outputId": "56cfc9e5-c43b-43ec-8e66-773cf9de10f1"
+        "outputId": "648529d0-0b28-4919-e79f-057c1c8f113d"
       },
       "outputs": [
         {
@@ -52,24 +52,17 @@
             "Requirement already satisfied: pillow>=8 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (11.3.0)\n",
             "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (3.3.2)\n",
             "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (2.9.0.post0)\n",
-            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.13/dist-packages (from python-dateutil>=2.7->matplotlib) (1.17.0)\n",
-            "Jug A capacity = 4 litres, Jug B capacity = 3\n",
-            "litres\n",
-            "Target amount to measure = 2 litres\n",
-            "\n",
-            "Solution found! Step-by-step states (Jug A, Jug B):\n",
-            " Step 0: (0, 0)\n",
-            " Step 1: (0, 3)\n",
-            " Step 2: (3, 0)\n",
-            " Step 3: (3, 3)\n",
-            " Step 4: (4, 2)\n",
-            "\n",
-            "Total number of steps used = 4\n"
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.13/dist-packages (from python-dateutil>=2.7->matplotlib) (1.17.0)\n"
           ]
         }
       ],
       "source": [
-        "!pip install networkx matplotlib\n",
+        "!pip install networkx matplotlib\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
         "from collections import deque\n",
         "def water_jug_bfs(jug1_capacity, jug2_capacity, target):\n",
         "    # A \"state\" is a tuple (amount in jug1, amount in jug2)\n",
@@ -110,6 +103,34 @@
         "    print(f\"\\nTotal number of steps used = {len(solution_path) - 1}\")\n",
         "else:\n",
         "    print(\"No solution exists for this combination.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "wvbvmpwiL2yB",
+        "outputId": "26ab2a5b-c36c-4046-eb54-e775b3c63a7a"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Jug A capacity = 4 litres, Jug B capacity = 3\n",
+            "litres\n",
+            "Target amount to measure = 2 litres\n",
+            "\n",
+            "Solution found! Step-by-step states (Jug A, Jug B):\n",
+            " Step 0: (0, 0)\n",
+            " Step 1: (0, 3)\n",
+            " Step 2: (3, 0)\n",
+            " Step 3: (3, 3)\n",
+            " Step 4: (4, 2)\n",
+            "\n",
+            "Total number of steps used = 4\n"
+          ]
+        }
       ]
     }
   ]
