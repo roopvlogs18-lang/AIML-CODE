@@ -1,0 +1,113 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNB4M4QzL3b98xDlnef5qP4",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/roopvlogs18-lang/AIML-CODE/blob/main/problem%202%20AI\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Rs_5Q0UgDEiV",
+        "outputId": "cc3eb678-b65c-43a4-a248-436599a3da9d"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Minimum steps required: 4\n",
+            "\n",
+            "Step 0: Initial state\n",
+            "Step 1: Fill Jug B completely -> (0, 3)\n",
+            "Step 2: Pour Jug B into Jug A -> (3, 0)\n",
+            "Step 3: Fill Jug B completely -> (3, 3)\n",
+            "Step 4: Pour Jug B into Jug A -> (4, 2)\n"
+          ]
+        }
+      ],
+      "source": [
+        " from collections import deque\n",
+        "\n",
+        "def solve_water_jug_bfs(cap_a, cap_b, target):\n",
+        "    # Queue stores tuples of (state, path_taken)\n",
+        "    # State format: (jug_a_water, jug_b_water)\n",
+        "    start_state = (0, 0)\n",
+        "    queue = deque([(start_state, [(start_state, \"Initial state\")])])\n",
+        "    visited = {start_state}\n",
+        "\n",
+        "    while queue:\n",
+        "        (a, b), path = queue.popleft()\n",
+        "\n",
+        "        # Goal check: either jug contains the target amount\n",
+        "        if a == target or b == target:\n",
+        "            return path\n",
+        "\n",
+        "        # Generate all 6 possible next moves\n",
+        "        moves = [\n",
+        "            ((cap_a, b), f\"Fill Jug A completely -> ({cap_a}, {b})\"),\n",
+        "            ((a, cap_b), f\"Fill Jug B completely -> ({a}, {cap_b})\"),\n",
+        "            ((0, b), f\"Empty Jug A -> (0, {b})\"),\n",
+        "            ((a, 0), f\"Empty Jug B -> ({a}, 0)\"),\n",
+        "        ]\n",
+        "\n",
+        "        # Pour A -> B\n",
+        "        pour_a_to_b = min(a, cap_b - b)\n",
+        "        moves.append(((a - pour_a_to_b, b + pour_a_to_b),\n",
+        "                       f\"Pour Jug A into Jug B -> ({a - pour_a_to_b}, {b + pour_a_to_b})\"))\n",
+        "\n",
+        "        # Pour B -> A\n",
+        "        pour_b_to_a = min(b, cap_a - a)\n",
+        "        moves.append(((a + pour_b_to_a, b - pour_b_to_a),\n",
+        "                       f\"Pour Jug B into Jug A -> ({a + pour_b_to_a}, {b - pour_b_to_a})\"))\n",
+        "\n",
+        "        # Explore unvisited states\n",
+        "        for next_state, action in moves:\n",
+        "            if next_state not in visited:\n",
+        "                visited.add(next_state)\n",
+        "                queue.append((next_state, path + [(next_state, action)]))\n",
+        "\n",
+        "    return None\n",
+        "\n",
+        "# Problem Execution\n",
+        "capacity_A = 4\n",
+        "capacity_B = 3\n",
+        "target_amount = 2\n",
+        "\n",
+        "shortest_path = solve_water_jug_bfs(capacity_A, capacity_B, target_amount)\n",
+        "\n",
+        "if shortest_path:\n",
+        "    print(f\"Minimum steps required: {len(shortest_path) - 1}\\n\")\n",
+        "    for step_num, (state, action) in enumerate(shortest_path):\n",
+        "        print(f\"Step {step_num}: {action}\")\n",
+        "else:\n",
+        "    print(\"No solution exists for these capacities and target.\")"
+      ]
+    }
+  ]
+}
